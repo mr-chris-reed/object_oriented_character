@@ -9,7 +9,9 @@ class Wraith:
         self.sprite_scale_factor = None
         self.sprite_width = None
         self.sprite_height = None
-        self.sprites = []
+        self.sprites = [] #
+        self.sprites_left = [] #
+        self.sprites_right = [] #
         self.sprite_index = 0
         self.counter = 0
 
@@ -23,7 +25,7 @@ class Wraith:
         self.sprite_sheet = pygame.image.load(self.sprite_sheet).convert_alpha()
         self.sprite_sheet_width = self.sprite_sheet.get_rect().width
         self.sprite_sheet_height = self.sprite_sheet.get_rect().height
-        self.sprite_scale_factor = 1
+        self.sprite_scale_factor = 1.2
         self.sprite_sheet_width = self.sprite_sheet_width * self.sprite_scale_factor
         self.sprite_sheet_height = self.sprite_sheet_height * self.sprite_scale_factor
         self.sprite_sheet = pygame.transform.scale(self.sprite_sheet, (self.sprite_sheet_width, self.sprite_sheet_height))
@@ -47,6 +49,20 @@ class Wraith:
             else:
                 self.sprite_index += 1
 
+    def sprite_picker_left(self):
+        if self.counter % 5 == 0: # adjust the number to the right of the "%" symbol to increase/decrease animation speed
+            if self.sprite_index >= 0 and self.sprite_index <= 4 or self.sprite_index == 9:
+                self.sprite_index = 5
+            else:
+                self.sprite_index += 1
+
+    def sprite_picker_right(self):
+        if self.counter % 5 == 0: # adjust the number to the right of the "%" symbol to increase/decrease animation speed
+            if self.sprite_index >= 4:
+                self.sprite_index = 0
+            else:
+                self.sprite_index += 1
+
     def get_sprite(self):
         return self.sprites[self.sprite_index]
 
@@ -55,6 +71,12 @@ class Wraith:
 
     def get_y(self):
         return self.y
+
+    def canMove(self, background):
+        if self.x >= background.get_low_x() and self.x <= background.get_high_x() and self.y >= background.get_low_y() and self.y <= background.get_high_y():
+            return True
+        else:
+            return False
 
     def move_up(self):
         self.y -= self.y_delta

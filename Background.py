@@ -3,8 +3,12 @@ import pygame
 
 class Background:
 
-    def __init__(self, background, x, y):
+    def __init__(self, background, x, y, low_x, high_x, low_y, high_y):
         self.background = pygame.image.load(background).convert_alpha()
+        self.low_x = low_x
+        self.high_x = high_x
+        self.low_y = low_y
+        self.high_y = high_y
         self.x = x
         self.y = y
 
@@ -17,3 +21,14 @@ class Background:
     def get_y(self):
         return self.y
 
+    def get_low_x(self):
+        return self.low_x
+
+    def get_high_x(self):
+        return self.high_x
+
+    def get_low_y(self):
+        return self.low_y
+
+    def get_high_y(self):
+        return self.high_y

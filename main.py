@@ -18,13 +18,13 @@ pygame.init()
 CANVAS = pygame.display.set_mode((W, H))
 pygame.display.set_caption("WRAITH!")
 
-backgrounds.append(Background.Background("background_1.png", 0, 0))
+backgrounds.append(Background.Background("background_2.png", 0, 0, 100, 900, 100, 900))
 
 clock = pygame.time.Clock()
 
 running = True
 
-wraith = Wraith.Wraith("wraith_V2.png", 10, 0, 0, 10, 10)
+wraith = Wraith.Wraith("wraith_V2.png", 10, W // 2, H // 2, 10, 10)
 
 while running:
 
@@ -37,17 +37,25 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        wraith.move_up()
+        if (wraith.canMove(backgrounds[0])):
+            wraith.move_up()
+        wraith.sprite_picker_right()
     if keys[pygame.K_s]:
-        wraith.move_down()
+        if (wraith.canMove(backgrounds[0])):
+            wraith.move_down()
+        wraith.sprite_picker_left()
     if keys[pygame.K_a]:
-        wraith.move_left()
+        if (wraith.canMove(backgrounds[0])):
+            wraith.move_left()
+        wraith.sprite_picker_left()
     if keys[pygame.K_d]:
-        wraith.move_right()
+        if (wraith.canMove(backgrounds[0])):
+            wraith.move_right()
+        wraith.sprite_picker_right()
 
     CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
     CANVAS.blit(wraith.get_sprite(), (wraith.get_x(), wraith.get_y()))
-    wraith.sprite_picker()
+    # wraith.sprite_picker()
     pygame.display.update()
     wraith.increment_counter()
     clock.tick(FPS)
