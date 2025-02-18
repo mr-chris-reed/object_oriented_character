@@ -1,20 +1,24 @@
 import pygame, sys
-import Wraith
+import Background, Wraith
 from pygame.locals import *
 
 # canvas variables
-W = 1920
-H = 1080
+W = 1106
+H = 1021
 
 # frame rate
 FPS = 60
 
 # background color
-BACKGROUND_COLOR = (255, 255, 255)
+BACKGROUND_COLOR = (0, 0, 0)
+
+backgrounds = []
 
 pygame.init()
 CANVAS = pygame.display.set_mode((W, H))
 pygame.display.set_caption("WRAITH!")
+
+backgrounds.append(Background.Background("background_1.png", 0, 0))
 
 clock = pygame.time.Clock()
 
@@ -41,6 +45,7 @@ while running:
     if keys[pygame.K_d]:
         wraith.move_right()
 
+    CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
     CANVAS.blit(wraith.get_sprite(), (wraith.get_x(), wraith.get_y()))
     wraith.sprite_picker()
     pygame.display.update()
