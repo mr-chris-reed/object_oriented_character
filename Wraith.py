@@ -72,11 +72,13 @@ class Wraith:
     def get_y(self):
         return self.y
 
-    def canMove(self, background):
-        if self.x >= background.get_low_x() and self.x <= background.get_high_x() and self.y >= background.get_low_y() and self.y <= background.get_high_y():
-            return True
-        else:
-            return False
+    def keep_on_playable_space(self, background):
+        sprite_rect = pygame.Rect(self.x, self.y, self.x + self.sprite_width, self.y + self.sprite_height)
+        sprite_rect.clamp_ip(background.movable_space_rect)
+        print(sprite_rect.left)
+        print(sprite_rect.top)
+        #print("sprite_rect type = ", type(sprite_rect))
+        #print("movable_space_rect type = ", type(background.movable_space_rect))
 
     def move_up(self):
         self.y -= self.y_delta

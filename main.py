@@ -37,25 +37,21 @@ while running:
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
-        if (wraith.canMove(backgrounds[0])):
             wraith.move_up()
-        wraith.sprite_picker_right()
+            wraith.sprite_picker_right()
     if keys[pygame.K_s]:
-        if (wraith.canMove(backgrounds[0])):
             wraith.move_down()
-        wraith.sprite_picker_left()
+            wraith.sprite_picker_left()
     if keys[pygame.K_a]:
-        if (wraith.canMove(backgrounds[0])):
             wraith.move_left()
-        wraith.sprite_picker_left()
+            wraith.sprite_picker_left()
     if keys[pygame.K_d]:
-        if (wraith.canMove(backgrounds[0])):
             wraith.move_right()
-        wraith.sprite_picker_right()
+            wraith.sprite_picker_right()
 
     CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
     CANVAS.blit(wraith.get_sprite(), (wraith.get_x(), wraith.get_y()))
-    # wraith.sprite_picker()
+    wraith.keep_on_playable_space(backgrounds[0])
     pygame.display.update()
     wraith.increment_counter()
     clock.tick(FPS)
