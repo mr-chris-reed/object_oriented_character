@@ -14,6 +14,8 @@ class Wraith:
         self.sprites_right = [] #
         self.sprite_index = 0
         self.counter = 0
+        self.health = 10
+        self.gold = 10
 
         self.sprite_sheet = sprite_sheet
         self.ts = ts
@@ -71,14 +73,6 @@ class Wraith:
 
     def get_y(self):
         return self.y
-
-    def keep_on_playable_space(self, background):
-        sprite_rect = pygame.Rect(self.x, self.y, self.x + self.sprite_width, self.y + self.sprite_height)
-        sprite_rect.clamp_ip(background.movable_space_rect)
-        print(sprite_rect.left)
-        print(sprite_rect.top)
-        #print("sprite_rect type = ", type(sprite_rect))
-        #print("movable_space_rect type = ", type(background.movable_space_rect))
 
     def move_up(self):
         self.y -= self.y_delta

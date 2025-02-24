@@ -1,5 +1,8 @@
 import pygame, sys
-import Background, Wraith
+from Background import Background
+from Wraith import Wraith
+from Hud import Hud
+from Font import Font
 from pygame.locals import *
 
 # canvas variables
@@ -15,16 +18,21 @@ BACKGROUND_COLOR = (0, 0, 0)
 backgrounds = []
 
 pygame.init()
+pygame.font.init()
 CANVAS = pygame.display.set_mode((W, H))
 pygame.display.set_caption("WRAITH!")
 
-backgrounds.append(Background.Background("background_2.png", 0, 0, 100, 900, 100, 900))
+backgrounds.append(Background("background_2.png", 0, 0, 100, 900, 100, 900))
 
 clock = pygame.time.Clock()
 
 running = True
 
-wraith = Wraith.Wraith("wraith_V2.png", 10, W // 2, H // 2, 10, 10)
+wraith = Wraith("wraith_V2.png", 10, W // 2, H // 2, 10, 10)
+
+hud = Hud(wraith, backgrounds[0], clock)
+
+font = Font("Creepster-Regular.ttf", 30, hud.get_hud())
 
 while running:
 
@@ -49,9 +57,10 @@ while running:
             wraith.move_right()
             wraith.sprite_picker_right()
 
+    backgrounds[0].checkAndSetCharsPos(wraith)
     CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
     CANVAS.blit(wraith.get_sprite(), (wraith.get_x(), wraith.get_y()))
-    wraith.keep_on_playable_space(backgrounds[0])
+    CANVAS.blit(font.generate_text_surface(), (0, 0))
     pygame.display.update()
     wraith.increment_counter()
     clock.tick(FPS)

@@ -33,3 +33,13 @@ class Background:
 
     def get_high_y(self):
         return self.high_y
+
+    def checkAndSetCharsPos(self, character):
+        if (character.x <= self.low_x):
+            character.x = self.low_x
+        if (character.x >= self.high_x - character.sprite_width / 2):
+            character.x = self.high_x - character.sprite_width / 2
+        if (character.y <= self.low_y):
+            character.y = self.low_y
+        if (character.y >= self.high_y - character.sprite_height):
+            character.y = self.high_y - character.sprite_height
