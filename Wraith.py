@@ -86,7 +86,7 @@ class Wraith:
     def move_right(self):
         self.x += self.y_delta
 
-    def jump():
+    def jump(time):
         pass
 
     def attack():

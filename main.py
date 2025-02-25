@@ -3,6 +3,8 @@ from Background import Background
 from Wraith import Wraith
 from Hud import Hud
 from Font import Font
+from Enemy import Enemy
+from StartScreen import StartScreen
 from pygame.locals import *
 
 # canvas variables
@@ -26,15 +28,23 @@ backgrounds.append(Background("background_2.png", 0, 0, 100, 900, 100, 900))
 
 clock = pygame.time.Clock()
 
+total_seconds = 0
+
 running = True
 
 wraith = Wraith("wraith_V2.png", 10, W // 2, H // 2, 10, 10)
 
+boss = Enemy("RPG_Boss_Sprite.png", 400, 400, 1, 1, 20, 2)
+
 hud = Hud(wraith, backgrounds[0], clock)
 
-font = Font("Creepster-Regular.ttf", 30, hud.get_hud())
+start_screen = StartScreen("start_screen_background.png", W, H, 0, 0)
 
 while running:
+
+    total_seconds += clock.get_time() / 1000
+    total_minutes = total_seconds // 60
+    left_over_seconds = total_seconds % 60
 
     CANVAS.fill(BACKGROUND_COLOR)
 
@@ -57,12 +67,23 @@ while running:
             wraith.move_right()
             wraith.sprite_picker_right()
 
+    hud_line_1 = Font("Creepster-Regular.ttf", 45, hud.get_hud()[0])
+    hud_line_2 = Font("Creepster-Regular.ttf", 45, hud.get_hud()[1])
+    hud_line_3 = Font("Creepster-Regular.ttf", 45, f"{total_minutes:.0f}" + ":" + f"{left_over_seconds:.2f}")
+
     backgrounds[0].checkAndSetCharsPos(wraith)
-    CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
+    CANVAS.blit(start_screen.background, (start_screen.x, start_screen.y))
+    # CANVAS.blit(backgrounds[0].get_background(), (backgrounds[0].get_x(), backgrounds[0].get_y()))
     CANVAS.blit(wraith.get_sprite(), (wraith.get_x(), wraith.get_y()))
-    CANVAS.blit(font.generate_text_surface(), (0, 0))
+    CANVAS.blit(boss.sprite, (boss.x, boss.y))
+    CANVAS.blit(hud_line_1.generate_text_surface(), (25, 25))
+    CANVAS.blit(hud_line_2.generate_text_surface(), (25, 75))
+    CANVAS.blit(hud_line_3.generate_text_surface(), (25, 125))
     pygame.display.update()
     wraith.increment_counter()
+    boss.moveTowardsPlayer(wraith)
+    if (boss.canAttack(wraith)):
+        boss.attack(wraith)
     clock.tick(FPS)
 
 pygame.quit()

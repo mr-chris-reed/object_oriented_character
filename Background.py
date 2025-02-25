@@ -11,7 +11,6 @@ class Background:
         self.high_y = high_y
         self.x = x
         self.y = y
-        self.movable_space_rect = pygame.Rect(self.low_x, self.low_y, self.high_x, self.high_y)
 
     def get_background(self):
         return self.background
